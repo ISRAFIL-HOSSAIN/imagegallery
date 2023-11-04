@@ -41,7 +41,7 @@ const Card: React.FC<ImageGalleryProps> = ({
   };
 
   return (
-    <div className="grid lg:grid-rows-3 grid-rows-5 md:grid-rows-3  gap-4 ">
+   
       <Droppable droppableId="gallery">
         {(provided) => (
           <div
@@ -57,7 +57,7 @@ const Card: React.FC<ImageGalleryProps> = ({
               >
                 {(provided, snapshot) => (
                   <div
-                    className={`${index === 0 && "row-span-2 col-span-2"}
+                    className={`${index === 0 ? "row-span-2 col-span-2 w-[400px] h-[420px]" : "w-[200px] h-[200px]"}
                     ${
                       snapshot.isDragging
                         ? "shadow-gray-400 shadow-lg border-2 border-gray-600 bg-gray-400"
@@ -107,7 +107,7 @@ const Card: React.FC<ImageGalleryProps> = ({
           </div>
         )}
       </Droppable>
-    </div>
+   
   );
 };
 
