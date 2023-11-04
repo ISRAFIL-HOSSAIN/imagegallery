@@ -38,7 +38,11 @@ export const images = [
     {
         id:"10",
         image:'/image-10.webp',
-    }
+    },
+    {
+        id:"11",
+        image:'/image-6.webp',
+    },
    
 ];
 

@@ -90,22 +90,25 @@ const ImageGallery: React.FC = () => {
   const onDragUpdate = (result: any) => {
     const { source, destination, draggableId } = result;
     const draggedDOM = getDraggedDom(draggableId);
-    const destinationIndex = destination.index;
+    const destinationIndex = destination?.index;
 
     if (!destination) return;
-    if (!draggedDOM?.parentNode) return; 
+    if (!draggedDOM?.parentNode) return;
 
     const { clientHeight, clientWidth } = draggedDOM;
     const sourceIndex = source.index;
 
-
-    	const clientY = parseFloat(window.getComputedStyle(draggedDOM.parentNode).paddingTop) + [...draggedDOM.parentNode.children]
-			.slice(0, destinationIndex)
-			.reduce((total, curr) => {
-				const style = curr.currentStyle || window.getComputedStyle(curr);
-				const marginBottom = parseFloat(style.marginBottom);
-				return total + curr.clientHeight + marginBottom;
-			}, 0);
+    const clientY =
+      parseFloat(
+        window.getComputedStyle(draggedDOM.parentNode as Element).paddingTop
+      ) +
+      Array.from((draggedDOM.parentNode as Element).children)
+        .slice(0, destinationIndex)
+        .reduce((total, curr) => {
+          const style = window.getComputedStyle(curr as Element);
+          const marginBottom = parseFloat(style.marginBottom);
+          return total + (curr as Element).clientHeight + marginBottom;
+        }, 0);
 
     setPlaceholderProps({
       clientHeight,
@@ -113,6 +116,7 @@ const ImageGallery: React.FC = () => {
       clientY,
     });
   };
+
 
   const getDraggedDom = (draggableId: string) => {
     const domQuery = `[${queryAttr}='${draggableId}']`;
