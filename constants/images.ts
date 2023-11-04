@@ -1,0 +1,44 @@
+export const images = [
+    {
+        id:"1",
+        image:'/image-1.webp',
+    },
+    {
+        id:"2",
+        image:'/image-2.webp',
+    },
+    {
+        id:"3",
+        image:'/image-3.webp',
+    },
+    {
+        id:"4",
+        image:'/image-4.webp',
+    },
+    {
+        id:"5",
+        image:'/image-5.webp',
+    },
+    {
+        id:"6",
+        image:'/image-6.webp',
+    },
+    {
+        id:"7",
+        image:'/image-7.webp',
+    },
+    {
+        id:"8",
+        image:'/image-8.webp',
+    },
+    {
+        id:"9",
+        image:'/image-9.webp',
+    },
+    {
+        id:"10",
+        image:'/image-10.webp',
+    }
+   
+];
+
