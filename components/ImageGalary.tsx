@@ -23,9 +23,11 @@ const ImageGallery: React.FC = () => {
     clientWidth: 0,
     clientHeight: 0,
   });
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const queryAttr = "data-rbd-drag-handle-draggable-id";
 
+  // Delete Functionality 
   const handleDeleteClick = () => {
     const updatedImages = gallery.filter(
       (_, index) => !selectedImages.includes(index)
@@ -34,6 +36,7 @@ const ImageGallery: React.FC = () => {
     setSelectedImages([]);
   };
 
+  // OnDrag End Functionality
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
 
@@ -51,6 +54,7 @@ const ImageGallery: React.FC = () => {
     setGallery(newGallery);
   };
 
+  // ReArange the Galary State Array .... 
   const reorderGallery = (
     list: Image[],
     startIndex: number,
@@ -62,36 +66,7 @@ const ImageGallery: React.FC = () => {
     return newList;
   };
 
-  // const onDragStart = (result: any) => {
-  //   const { source, draggableId } = result;
-  //   const draggedDOM = getDraggedDom(draggableId);
-
-  //   if (!draggedDOM) return;
-
-  //   const { clientHeight, clientWidth } = draggedDOM;
-  //   const sourceIndex = source.index;
-
-  //   if (!draggedDOM.parentNode) return;
-
-  //   const childrenArray = [...draggedDOM.parentNode.children]; // Convert HTMLCollection to an array
-
-  //   const clientY =
-  //     parseFloat(window.getComputedStyle(draggedDOM.parentNode).paddingTop) +
-  //     childrenArray
-  //       .slice(0, sourceIndex)
-  //       .reduce((total, current) => {
-  //         const style = current.currentStyle || window.getComputedStyle(current);
-  //         const marginBottom = parseFloat(style.marginBottom);
-  //         return total + current.clientHeight + marginBottom;
-  //       }, 0);
-
-  //   setPlaceholderProps({
-  //     clientHeight,
-  //     clientWidth,
-  //     clientY,
-  //   });
-  // };
-
+  //Drag Update Functionality ... 
   const onDragUpdate = (result: any) => {
     const { source, destination, draggableId } = result;
     const draggedDOM = getDraggedDom(draggableId);
@@ -122,10 +97,26 @@ const ImageGallery: React.FC = () => {
     });
   };
 
+  // Get Dom Information 
   const getDraggedDom = (draggableId: string) => {
     const domQuery = `[${queryAttr}='${draggableId}']`;
     const draggedDom = document.querySelector(domQuery);
     return draggedDom;
+  };
+
+  // Sorting Functionality
+  const handleSortClick = () => {
+    const sortedGallery = [...gallery];
+    sortedGallery.sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.id.localeCompare(b.id);
+      } else {
+        return b.id.localeCompare(a.id);
+      }
+    });
+
+    setGallery(sortedGallery);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
 
   return (
@@ -145,12 +136,28 @@ const ImageGallery: React.FC = () => {
             "Gallery"
           )}
         </h2>
-        <button
-          className="text-red-500 font-semibold hover:underline"
-          onClick={handleDeleteClick}
-        >
-          Delete files
-        </button>
+
+        <div className="">
+          <div className="relative inline-block text-left mr-5">
+            <label htmlFor="sortSelect" className="px-2 font-semibold ">Sort:</label>
+            <select
+              id="sortSelect"
+              className="ring-0 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none "
+              value={sortOrder}
+              onChange={handleSortClick}
+            >
+              <option value="asc">LTR</option>
+              <option value="desc">RTL</option>
+            </select>
+          </div>
+
+          <button
+            className="text-red-500 font-semibold hover:underline"
+            onClick={handleDeleteClick}
+          >
+            Delete files
+          </button>
+        </div>
       </div>
 
       <DragDropContext
