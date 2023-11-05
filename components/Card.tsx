@@ -116,6 +116,3 @@ const Card: React.FC<ImageGalleryProps> = ({
 };
 
 export default Card;
-
-
-{/* <div className="grid lg:grid-rows-3 grid-rows-5 md:grid-rows-3 grid-flow-col gap-4"></div> */}
