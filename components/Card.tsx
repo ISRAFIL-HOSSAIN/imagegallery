@@ -13,7 +13,7 @@ const Card: React.FC<ImageGalleryProps> = ({
   gallery,
   selectedImages,
   setSelectedImages,
-  placeholderProps
+  placeholderProps,
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -41,14 +41,14 @@ const Card: React.FC<ImageGalleryProps> = ({
   };
 
   return (
-   
-      <Droppable droppableId="gallery">
-        {(provided) => (
-          <div
-            className="grid lg:grid-rows-3 grid-rows-5 md:grid-rows-3 grid-flow-col gap-4"
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
+    <Droppable droppableId="gallery">
+      {(provided) => (
+        <div
+          className="w-full h-full"
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+        >
+          <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1  grid-rows-4 gap-4">
             {gallery.map((image: any, index: any) => (
               <Draggable
                 key={image.id}
@@ -57,11 +57,15 @@ const Card: React.FC<ImageGalleryProps> = ({
               >
                 {(provided, snapshot) => (
                   <div
-                    className={`${index === 0 ? "row-span-2 col-span-2 w-[400px] h-[420px]" : "w-[200px] h-[200px]"}
+                    className={`${
+                      index === 0
+                        ? "row-span-2 col-span-2 w-[450px] h-[420px]"
+                        : "w-[200px] h-[200px]"
+                    }
                     ${
                       snapshot.isDragging
                         ? "shadow-gray-400 shadow-lg border-2 border-gray-600 bg-gray-400"
-                        : "undefined"
+                        : ""
                     } border rounded-lg overflow-hidden relative hover:bg-gray-400 `}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
@@ -93,22 +97,25 @@ const Card: React.FC<ImageGalleryProps> = ({
                 )}
               </Draggable>
             ))}
-            {provided.placeholder}
-            {placeholderProps && (
-              <div
-                className="absolute border-2 border-dashed border-card-border rounded-md opacity-60"
-                style={{
-                  top: `${placeholderProps.clientY}px`,
-                  width: `${placeholderProps.clientWidth}px`,
-                  height: `${placeholderProps.clientHeight}px`,
-                }}
-              />
-            )}
           </div>
-        )}
-      </Droppable>
-   
+          {provided.placeholder}
+          {placeholderProps && (
+            <div
+              className="w-[200px] h-[200px]  border-2 border-dashed border-card-border rounded-md opacity-60"
+              style={{
+                top: `${placeholderProps.clientY}px`,
+                width: `${placeholderProps.clientWidth}px`,
+                height: `${placeholderProps.clientHeight}px`,
+              }}
+            />
+          )}
+        </div>
+      )}
+    </Droppable>
   );
 };
 
 export default Card;
+
+
+{/* <div className="grid lg:grid-rows-3 grid-rows-5 md:grid-rows-3 grid-flow-col gap-4"></div> */}

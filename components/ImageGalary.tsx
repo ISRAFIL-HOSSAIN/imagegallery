@@ -9,16 +9,21 @@ type Image = {
   image: string;
 };
 
+type PlaceholderProps = {
+  clientY: number;
+  clientWidth: number;
+  clientHeight: number;
+};
 
 const ImageGallery: React.FC = () => {
   const [selectedImages, setSelectedImages] = useState<number[]>([]);
   const [gallery, setGallery] = useState<Image[]>(images);
-  const [placeholderProps, setPlaceholderProps] = useState({
+  const [placeholderProps, setPlaceholderProps] = useState<PlaceholderProps>({
     clientY: 0,
     clientWidth: 0,
     clientHeight: 0,
   });
-  
+
   const queryAttr = "data-rbd-drag-handle-draggable-id";
 
   const handleDeleteClick = () => {
@@ -117,7 +122,6 @@ const ImageGallery: React.FC = () => {
     });
   };
 
-
   const getDraggedDom = (draggableId: string) => {
     const domQuery = `[${queryAttr}='${draggableId}']`;
     const draggedDom = document.querySelector(domQuery);
@@ -125,8 +129,8 @@ const ImageGallery: React.FC = () => {
   };
 
   return (
-    <div className="px-10 border-2 py-5 rounded-md">
-      <div className="border-b-2 pb-2 mb-5 flex justify-between">
+    <div className="lg:px-16 px-2 border-2 py-5 rounded-md w-full  overflow-hidden">
+      <div className="border-b-2 pb-2 mb-5 flex justify-between w-full">
         <h2 className="text-lg font-semibold">
           {selectedImages.length > 0 ? (
             <>
